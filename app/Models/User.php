@@ -9,6 +9,17 @@ use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
+
+    public function clearanceRequests()
+    {
+        return $this->hasMany(ClearanceRequest::class, 'user_id');
+    }
+
+    public function supervisedRequests()
+    {
+        return $this->hasMany(ClearanceRequest::class, 'supervisor_id');
+    }
+
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
