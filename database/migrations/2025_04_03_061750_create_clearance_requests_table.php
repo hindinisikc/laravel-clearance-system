@@ -12,12 +12,29 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('clearance_requests', function (Blueprint $table) {
-            $table->id('clearance_request_id');
-            $table->foreignId('user_id')->constrained();
-            $table->foreignId('supervisor_id')->constrained('users');
-            $table->foreignId('department_id')->constrained();
+
+            // Primary key (auto-incrementing ID)
+            $table->id();
+
+            // Foreign key to the users table (employee)
+            // This assumes you have a users table with an id column
+            // and that the employee_id column in this table references it
+            $table->foreignId('user_id')->constrained('users');
+            $table->foreignId('supervisor_id')->nullable()->constrained('users');
+            $table->foreignId('department_id')->constrained('departments');
+
+            // Date Fields
             $table->date('date_submitted');
+
+            // Time stamps
             $table->timestamps();
+
+            // Optional Indexes for better performance
+            $table->index('user_id');
+            $table->index('supervisor_id');
+            $table->index('department_id');
+
+
         });
     }
 
